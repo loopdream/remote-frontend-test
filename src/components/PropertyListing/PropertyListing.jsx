@@ -1,34 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PropertyCard from '../PropertyCard';
 import './PropertyListing.scss';
 
-const DUMMY_PROPERTY = {
-    id: 73864112,
-    bedrooms: 3,
-    summary: 'Property 1 Situated moments from the River Thames in Old Chelsea...',
-    displayAddress: '1 CHEYNE WALK, CHELSEA, SW3',
-    propertyType: 'Flat',
-    price: 1950000,
-    branchName: 'M2 Property, London',
-    propertyUrl: '/property-for-sale/property-73864112.html',
-    contactUrl: '/property-for-sale/contactBranch.html?propertyId=73864112',
-    propertyTitle: '3 bedroom flat for sale',
-    mainImage:
-        'https://media.rightmove.co.uk/dir/crop/10:9-16:9/38k/37655/53588679/37655_CAM170036_IMG_01_0000_max_476x317.jpg',
-};
-
-const PropertyListing = () => {
+const PropertyListing = ({ properties }) => {
     return (
         <ul className="PropertyListing">
-            {Array(5)
-                .fill(DUMMY_PROPERTY)
-                .map((property, index) => (
-                    <li key={index}>
-                        <PropertyCard {...property} />
-                    </li>
-                ))}
+            {properties?.map((property) => (
+                <li key={property.id}>
+                    <PropertyCard {...property} />
+                </li>
+            ))}
         </ul>
     );
+};
+PropertyListing.propTypes = {
+    properties: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            bedrooms: PropTypes.number.isRequired,
+            summary: PropTypes.string.isRequired,
+            displayAddress: PropTypes.string.isRequired,
+            propertyType: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
+            branchName: PropTypes.string.isRequired,
+            propertyUrl: PropTypes.string.isRequired,
+            contactUrl: PropTypes.string.isRequired,
+            propertyTitle: PropTypes.string.isRequired,
+            mainImage: PropTypes.string.isRequired,
+        })
+    ),
 };
 
 export default PropertyListing;
